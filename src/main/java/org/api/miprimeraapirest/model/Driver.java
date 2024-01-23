@@ -14,8 +14,7 @@ public class Driver {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "driverid")
     private Long driverId;
-
-    @Column(unique = true)
+    @Column(unique = true, name = "code")
     private String code;
     private String forename;
     private String surname;
@@ -23,4 +22,8 @@ public class Driver {
     private LocalDate dob;
     private String nationality;
     private String url;
+
+    public Long getDriverId() {
+        return driverId;
+    }
 }
