@@ -10,24 +10,26 @@ import java.util.List;
 @Data
 @Table(name = "constructors")
 public class Constructor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "constructorid")
-    private Long id;
-    @Column(name = "constructorref", unique = true, nullable = false)
-    private String ref;
-    @Column(nullable = false)
+    private Long constructorId;
+
+    @Column(name = "constructorref", unique = true)
+    private String constructorRef;
+
+    @Column(unique = true, name = "name")
     private String name;
-    @Column(nullable = false)
+
     private String nationality;
     private String url;
 
+    public Long getConstructorId() {
+        return constructorId;
+    }
 
     @OneToMany(mappedBy = "constructor" , cascade = CascadeType.ALL)
     @JsonIgnoreProperties("constructor")
     private List<Driver> drivers;
-
-    public Long getId() {
-        return id;
-    }
 }

@@ -17,6 +17,12 @@ public class Result {
     @JoinColumn(name = "raceid")
     @JsonManagedReference
     private Race race;
+
+    @ManyToOne
+    @JoinColumn(name = "driverid")
+    @JsonManagedReference
+    private Driver driver;
+
     private int grid;
     private Integer position;
     private int points;

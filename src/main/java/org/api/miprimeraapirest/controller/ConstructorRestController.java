@@ -34,7 +34,7 @@ public class ConstructorRestController {
 
     @PostMapping("/constructors")
     public ResponseEntity<Constructor> create(@RequestBody Constructor constructor){
-        if(constructor.getId() != null){
+        if(constructor.getConstructorId() != null){
             return ResponseEntity.badRequest().build();
         }
         this.constructorService.saveConstructor(constructor);
