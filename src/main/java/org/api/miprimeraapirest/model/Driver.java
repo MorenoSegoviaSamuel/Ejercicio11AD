@@ -1,10 +1,12 @@
 package org.api.miprimeraapirest.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,4 +28,8 @@ public class Driver {
     public Long getDriverId() {
         return driverId;
     }
+
+    @OneToMany(mappedBy = "driver")
+    @JsonBackReference
+    private Set<Result> results;
 }
