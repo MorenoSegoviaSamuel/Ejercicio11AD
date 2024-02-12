@@ -1,25 +1,37 @@
 package org.api.miprimeraapirest.service;
 
+
+import org.api.miprimeraapirest.mapper.DriverDTOMapper;
 import org.api.miprimeraapirest.model.Driver;
+import org.api.miprimeraapirest.model.DriverDTO;
 import org.api.miprimeraapirest.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DriverServiceImpl implements DriverService {
+
     private final DriverRepository repository;
 
+    private final DriverDTOMapper mapper;
+
     @Autowired
-    public DriverServiceImpl(DriverRepository repository){
-        this.repository = repository;
+    public DriverServiceImpl(DriverRepository driverService, DriverDTOMapper mapper){
+        this.mapper = mapper;
+        this.repository = driverService;
     }
 
     @Override
-    public List<Driver> getAllDrivers(){
-        return repository.findAll();
+    public List<DriverDTO> getAllDrivers() {
+        List<DriverDTO> response = new ArrayList<>();
+
+        repository.findAll().forEach(driver -> response.add(mapper.toDriverDTO(driver)));
+
+        return response;
     }
 
     @Override
@@ -31,6 +43,8 @@ public class DriverServiceImpl implements DriverService {
     public void saveDriver(Driver driver) {
         repository.save(driver);
     }
+
+
 
     @Override
     public void deleteDriverByCode(String code) {
