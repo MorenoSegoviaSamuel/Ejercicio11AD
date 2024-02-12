@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.api.miprimeraapirest.model.Constructor;
 import org.api.miprimeraapirest.service.ConstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,15 @@ public class ConstructorRestController {
     }
 
     @GetMapping("/constructors")
-    public ResponseEntity<List<Constructor>> getAll(){
-        return ResponseEntity.ok(constructorService.getAllConstructors());
+    public ResponseEntity<List<Constructor>> getAll(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam(defaultValue = "constructorId") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection){
+        Page<Constructor> listado = constructorService.getAllConstructorsPaged(page, size, sortBy, sortDirection);
+        return ResponseEntity.ok(listado.getContent());
     }
+
 
     @GetMapping("/constructors/{constructorRef}")
     public ResponseEntity<Constructor> getByConstructorRef(@PathVariable String constructorRef){

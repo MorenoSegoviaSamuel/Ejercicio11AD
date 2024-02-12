@@ -1,6 +1,7 @@
 package org.api.miprimeraapirest.controller;
 
 import org.api.miprimeraapirest.model.Driver;
+import org.api.miprimeraapirest.model.DriverDTO;
 import org.api.miprimeraapirest.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +17,12 @@ public class DriverRestController {
     private final DriverService driverService;
 
     @Autowired
-    public DriverRestController(DriverService service){
-
-        this.driverService = service;
+    public DriverRestController(DriverService driverService){
+        this.driverService = driverService;
     }
 
     @GetMapping("/drivers")
-    public ResponseEntity<List<Driver>> getAll(){
+    public ResponseEntity<List<DriverDTO>> getAll(){
         return ResponseEntity.ok(driverService.getAllDrivers());
     }
 
@@ -32,9 +32,10 @@ public class DriverRestController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
     @PostMapping("/drivers")
     public ResponseEntity<Driver> create(@RequestBody Driver driver){
-        if (driver.getDriverId() != null){
+        if(driver.getDriverId() != null){
             return ResponseEntity.badRequest().build();
         }
         this.driverService.saveDriver(driver);
@@ -51,6 +52,6 @@ public class DriverRestController {
     @DeleteMapping("/drivers/{code}")
     public ResponseEntity<Driver> deleteByCode(@PathVariable String code){
         this.driverService.deleteDriverByCode(code);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }

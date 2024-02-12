@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-
+import java.time.LocalDate;
 @Mapper(componentModel = "spring")
 public interface DriverDTOMapper {
 
@@ -18,7 +18,7 @@ public interface DriverDTOMapper {
     })
     DriverDTO toDriverDTO(Driver driver);
 
-    default String crearNombreCompleto(String forename, String surname){
+    default String crearFullName(String forename, String surname){
         return forename + " " + surname;
     }
 
